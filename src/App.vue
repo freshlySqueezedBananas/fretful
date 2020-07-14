@@ -1,28 +1,29 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Fretboard tuning="e a d g" :plot="['c:2 d:3', 'e:1 f:2 g:4', 'a:1 b:3 c:4']" :length="24"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Fretboard: () => import('./components/Fretboard.vue')
   }
 }
 </script>
 
 <style>
+*, *:before, *:after {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
