@@ -242,6 +242,7 @@ export default {
   margin: 0;
 
   list-style-type: none;
+  box-sizing: content-box;
 
   .fretboard--thumb & {
     height: $thumb-string-height;

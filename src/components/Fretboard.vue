@@ -136,6 +136,7 @@ export default {
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: content-box;
 
   z-index: 0;
 
@@ -165,6 +166,7 @@ export default {
   padding: 0;
   margin: $fret-numbers-margin 0 0 0;
   font-size: $fret-numbers-font-size;
+  box-sizing: content-box;
 
   .fretboard--left-handed & {
     flex-direction: row-reverse;
@@ -188,6 +190,7 @@ export default {
     width: $fret-regular-width + $fret-regular-border-width;
     align-items: center;
     justify-content: flex-end;
+    box-sizing: content-box;
 
     color: $color-gray-lighter;
     font-size: $fret-numbers-font-size;

@@ -94,6 +94,7 @@ $fret-regular-width: 36px;
   padding: 0;
   list-style-type: none;
   margin: 0;
+  box-sizing: content-box;
 
   .fretboard--left-handed & {
     left: 0;

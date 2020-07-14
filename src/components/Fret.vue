@@ -44,6 +44,7 @@ export default {
   display: inline-block;
   width: $fret-regular-width;
   height: 100%;
+  box-sizing: content-box;
 
   border-right: $fret-regular-border-width solid $color-gray-lighter;
 
