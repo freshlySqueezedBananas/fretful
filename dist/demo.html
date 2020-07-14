@@ -1,0 +1,19 @@
+<meta charset="utf-8">
+<title>fretful demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./fretful.umd.js"></script>
+
+<link rel="stylesheet" href="./fretful.css">
+
+
+<div id="app">
+  <demo></demo>
+</div>
+
+<script>
+new Vue({
+  components: {
+    demo: fretful
+  }
+}).$mount('#app')
+</script>
