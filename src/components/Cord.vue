@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import Fret from './Fret';
+import Note from './Note';
+
 export default {
   name: 'String',
   data() {
@@ -220,8 +223,8 @@ export default {
     }
   },
   components: {
-    Fret: () => import('./Fret.vue'),
-    Note: () => import('./Note.vue')
+    Fret,
+    Note
   }
 }
 </script>

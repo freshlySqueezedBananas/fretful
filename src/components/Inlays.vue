@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  name: 'inlays',
+  name: 'Inlays',
   props: {
     inlays: {
       type: String,

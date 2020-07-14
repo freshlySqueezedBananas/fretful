@@ -7,7 +7,7 @@
     <div class="board">
       <div class="board-wrapper">
         <Inlays v-bind="{ inlays, octaves }" v-if="!thumb"/>
-        <String
+        <Cord
           v-for="(string, index) in strings"
           :key="index"
           :plot="Array.isArray(plot) ? plotPerString[index] : plot"
@@ -25,6 +25,9 @@
 </template>
 
 <script>
+import Inlays from './Inlays';
+import Cord from './Cord';
+
 export default {
   name: 'board',
   props: {
@@ -116,8 +119,8 @@ export default {
     }
   },
   components: {
-    Inlays: () => import('./Inlays.vue'),
-    String: () => import('./String.vue')
+    Inlays,
+    Cord
   }
 }
 </script>
