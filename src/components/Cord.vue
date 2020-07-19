@@ -26,7 +26,7 @@
           display
         }"
         :highlight="note === highlight || note.includes(highlight)"
-        :isRoot="root === note"
+        :isRoot="root === note || note.includes(root)"
         :plotNote="plotNote(note)"
         :finger="plotFinger(note)"
         v-if="plotContainsNote(note)"
