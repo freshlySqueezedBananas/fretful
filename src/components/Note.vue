@@ -25,12 +25,6 @@
 </template>
 
 <script>
-import { Sampler } from 'tone';
-import C0 from '../assets/audio/C0.wav';
-import C1 from '../assets/audio/C1.wav';
-import C2 from '../assets/audio/C2.wav';
-import C3 from '../assets/audio/C3.wav';
-
 import { $bus } from '../main';
 import { getIntervalFromRoot } from '../entities/intervals';
 
@@ -135,9 +129,6 @@ export default {
     },
     emitNoteClick(note) {
       $bus.$emit('click-note', { instance: this.instance, note: `${note}${this.octave}` });
-    },
-    playNote() {
-      this.sampler.triggerAttack(`${this.displayNote}${this.octave}`);
     }
   },
   computed: {
@@ -167,8 +158,6 @@ export default {
     },
   },
   created() {
-    this.sampler = new Sampler({ C0, C1, C2, C3 }).toMaster();
-
     $bus.$on('mouseenter-note', ({ instance, note }) => {
       if (instance !== this.instance) {
         return;
