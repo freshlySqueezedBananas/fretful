@@ -1,8 +1,9 @@
 <template>
-  <ul class="string">
+  <ul class="string" :class="{ 'string--realistic' : realistic }">
     <Fret :isMuted="plot.includes('x')">
       <Note
-        :note="string"
+        :note="stringNote"
+        :octave="stringOctave"
         :isActive="plot.includes('r')"
         v-bind="{ instance }"
         isNeck
@@ -29,6 +30,7 @@
         :isRoot="root === note || note.includes(root)"
         :plotNote="plotNote(note)"
         :finger="plotFinger(note)"
+        :octave="octaveIndexes[index]"
         v-if="plotContainsNote(note)"
       />
     </Fret>
@@ -122,7 +124,7 @@ export default {
     },
     string: {
       type: String,
-      default: 'e'
+      default: 'e1'
     },
     root: {
       type: String,
@@ -155,17 +157,31 @@ export default {
     display: {
       type: String,
       default: 'notes'
+    },
+    realistic: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
+    stringNote() {
+      const note = this.string.match(/[^0-9]+/g)[0];
+
+      return note;
+    },
+    stringOctave() {
+      const octave = this.string.match(/[0-9]+/g) ? Number(this.string.match(/[0-9]+/g)[0]) : 1;
+
+      return octave;
+    },
     plotNotes() {
       return this.plot.split(' ');
     },
     chromaticScale() {
       const octaves = Math.ceil(this.length / 12);
-      const startsWithAccidental = this.string.length === 2;
+      const startsWithAccidental = this.stringNote.length === 2;
 
-      const index = this.notes.findIndex(n => startsWithAccidental ? String(n).includes(this.string) : n === this.string);
+      const index = this.notes.findIndex(n => startsWithAccidental ? String(n).includes(this.stringNote) : n === this.stringNote);
 
       const indexDisplaced = index + this.startingFret === this.notes.length ? 0 : index + this.startingFret;
 
@@ -179,6 +195,20 @@ export default {
       }
 
       return scale.splice(0, this.length);
+    },
+    octaveIndexes() {
+      const indexes = [];
+      let current = this.stringOctave;
+
+      this.chromaticScale.forEach(n => {
+        if (n === 'c') {
+          current += 1;
+        }
+
+        indexes.push(current);
+      });
+
+      return indexes;
     }
   },
   methods: {
@@ -233,6 +263,8 @@ export default {
 @import '../assets/sass/main.scss';
 
 .string {
+  $self: &;
+
   display: inline-flex;
   position: relative;
 
@@ -272,6 +304,8 @@ export default {
     height: $string-width;
     background-color: $color-gray-light;
 
+    transform: translateY(-50%);
+
     z-index: 1;
 
     .fretboard--thumb & {
@@ -304,6 +338,49 @@ export default {
       left: 50%;
       bottom: $thumb-fret-last-border-width;
       right: initial;
+    }
+  }
+
+  &--realistic {
+    $string-positions: 2 3 4 5 6 7;
+    @each $string in $string-positions {
+      $i: index($string-positions, $string);
+
+      $girth: $string-width * ($string + 1);
+
+      &:nth-child(#{$string}):before {
+        height: $string-width * $string;
+
+        .fretboard--vertical & {
+          width: $string-width * $string;;
+          height: auto;
+        }
+      }
+    }
+
+    &:before {
+      left: $fret-initial-width - 4;
+      background-image: linear-gradient(
+                          75deg,
+                          rgba($color-gray-lighter, 0.45) 8.33%,
+                          $color-gray-light 8.33%,
+                          $color-gray-light 50%,
+                          rgba($color-gray-lighter, 0.45) 50%,
+                          rgba($color-gray-lighter, 0.45) 58.33%,
+                          $color-gray-light 58.33%,
+                          $color-gray-light 100%);
+      background-size: 6.21px 23.18px;
+
+      box-shadow: inset 0px -1px 0px 0px rgba($color-gray, 0.15);
+
+      .fretboard--thumb & {
+        height: $string-width;
+      }
+
+      .fretboard--vertical.fretboard--thumb & {
+        width: $string-width;
+        height: auto;
+      }
     }
   }
 }

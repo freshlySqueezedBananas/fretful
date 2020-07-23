@@ -11,7 +11,9 @@
           v-for="(string, index) in strings"
           :key="index"
           :plot="Array.isArray(plot) ? plotPerString[index] : plot"
-          v-bind="{ instance, display, string, length, startingFret, root: plotRoot, groupedByColor, highlight, highlightRoot, linkAccidentals }"
+          v-bind="{ instance, display, string, length, startingFret, root: plotRoot, groupedByColor, highlight, highlightRoot, linkAccidentals }
+          "
+          realistic
         />
       </div>
       <ul class="fret-numbers">
@@ -53,7 +55,7 @@ export default {
     },
     tuning: {
       type: String,
-      default: 'e a d g'
+      default: 'e1 a1 d2 g2'
     },
     highlight: {
       type: Boolean,

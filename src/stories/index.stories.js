@@ -44,7 +44,7 @@ export const Default = () => ({
       default: select('Inlays', ['', 'circles', 'trapezoids', 'rectangles'], 'circles', 'Layout')
     },
     tuning: {
-      default: text('Tuning', 'e a d g', 'Settings')
+      default: text('Tuning', 'e1 a1 d2 g2', 'Settings')
     },
     plot: {
       default: text('Plot', 'c c# d d# e f f# g g# a a# b', 'Settings')
@@ -127,7 +127,7 @@ export const ShapesWithFingering = () => ({
   template: `
     <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap">
       <Fretboard
-        tuning="e a d g"
+        tuning="e1 a1 d2 g2"
         :length="12"
         :plot="['c:2 d:4', 'e:1 f:2 g:4', 'a:1 b:3 c:4']"
       />
@@ -140,17 +140,10 @@ export const VerticalShapes = () => ({
   template: `
     <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap">
       <Fretboard
-        tuning="e a d g b e"
+        tuning="e2 a2 d3 g3 b3 e4"
         orientation="vertical"
         :length="4"
         :plot="['g', 'b', 'r', 'r', 'r', 'g']"
-      />
-      <Fretboard
-        tuning="e a d g b e"
-        orientation="vertical"
-        :length="4"
-        :plot="['g', 'b', 'r', 'r', 'r', 'g']"
-        :startingFret="5"
       />
     </div>
   `
@@ -161,27 +154,27 @@ export const Thumbs = () => ({
   template: `
     <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap">
       <Fretboard
-        tuning="e a d g b e"
+        tuning="e2 a2 d3 g3 b3 e4"
         :length="5"
         :plot="['x', 'c', 'x', 'r', 'c', 'r']"
         thumb
       />
       <Fretboard
-        tuning="e a d g b e"
+        tuning="e2 a2 d3 g3 b3 e4"
         :length="5"
         :plot="['x', 'c', 'x', 'r', 'c', 'r']"
         thumb
         leftHanded
       />
       <Fretboard
-        tuning="e a d g b e"
+        tuning="e2 a2 d3 g3 b3 e4"
         :length="5"
         :plot="['x', 'c', 'x', 'r', 'c', 'r']"
         orientation="vertical"
         thumb
       />
       <Fretboard
-        tuning="e a d g b e"
+        tuning="e2 a2 d3 g3 b3 e4"
         :length="5"
         :plot="['x', 'c', 'x', 'r', 'c', 'r']"
         orientation="vertical"
@@ -198,7 +191,7 @@ export const MetaWrapper = () => ({
     <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap">
       <Meta title="C<sup>△</sup>">
         <Fretboard
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="12"
           :plot="['c', 'e g', 'c']"
           thumb
@@ -206,7 +199,7 @@ export const MetaWrapper = () => ({
       </Meta>
       <Meta title="E<em>m</em><sup>7</sup>">
         <Fretboard
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="12"
           :plot="['', 'e', 'g b', 'd e']"
           thumb
@@ -214,7 +207,7 @@ export const MetaWrapper = () => ({
       </Meta>
       <Meta title="F<sup>△</sup>">
         <Fretboard
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="12"
           :plot="['', 'f', 'a c', 'f']"
           thumb
@@ -222,7 +215,7 @@ export const MetaWrapper = () => ({
       </Meta>
       <Meta title="G<sup>7</sup>">
         <Fretboard
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="12"
           :plot="['g', 'b d', 'f g']"
           thumb
@@ -239,7 +232,7 @@ export const UsefulShapes = () => ({
       <Meta title="Octave">
         <Fretboard
           display="intervals"
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="6"
           :plot="['g', '', 'g']"
         />
@@ -247,7 +240,7 @@ export const UsefulShapes = () => ({
       <Meta title="Root fifth">
         <Fretboard
           display="intervals"
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="6"
           :plot="['g', 'd']"
         />
@@ -255,7 +248,7 @@ export const UsefulShapes = () => ({
       <Meta title="Major triad">
         <Fretboard
           display="intervals"
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="6"
           :plot="['g', 'b d']"
         />
@@ -263,7 +256,7 @@ export const UsefulShapes = () => ({
       <Meta title="Minor triad">
         <Fretboard
           display="intervals"
-          tuning="e a d g"
+          tuning="e1 a1 d2 g2"
           :length="6"
           :plot="['g bb', 'd']"
         />
