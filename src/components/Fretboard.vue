@@ -13,7 +13,7 @@
           :plot="Array.isArray(plot) ? plotPerString[index] : plot"
           v-bind="{ instance, display, string, length, startingFret, root: plotRoot, groupedByColor, highlight, highlightRoot, linkAccidentals }
           "
-          :realistic={realisticStrings}
+          :realistic="realisticStrings"
         />
       </div>
       <ul class="fret-numbers">
