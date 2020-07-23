@@ -13,7 +13,7 @@
           :plot="Array.isArray(plot) ? plotPerString[index] : plot"
           v-bind="{ instance, display, string, length, startingFret, root: plotRoot, groupedByColor, highlight, highlightRoot, linkAccidentals }
           "
-          realistic
+          :realistic={realisticStrings}
         />
       </div>
       <ul class="fret-numbers">
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { $bus } from '../main';
 import Inlays from './Inlays';
 import Cord from './Cord';
 
@@ -84,6 +85,10 @@ export default {
     thumb: {
       type: Boolean,
       default: false
+    },
+    realisticStrings: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -123,6 +128,15 @@ export default {
   components: {
     Inlays,
     Cord
+  },
+  created() {
+    $bus.$on('click-note', ({ instance, note }) => {
+      if (instance !== this.instance) {
+        return;
+      }
+
+      this.$emit('click-note', note);
+    });
   }
 }
 </script>
