@@ -5,13 +5,14 @@
       'note--active' : isActive,
       'note--neck' : isNeck,
       'note--root' : isRoot && highlightRoot,
-      'note--dimmed' : isDimmed,
+      'note--unfocused' : isDimmed,
       'note--link-accidentals' : linkAccidentals,
       ['note--finger note--finger--' + this.finger] : this.finger,
       ['note--individual--' + this.$options.filters.toAccidentals(displayNote)] : groupedByColor
     }"
-    @mouseenter="emitNote(displayNote)"
-    @mouseleave="emitNote(null)"
+    @mouseenter="emitNoteHover(displayNote)"
+    @mouseleave="emitNoteHover(null)"
+    @click="emitNoteClick(displayNote)"
     v-if="!isHidden"
   >
     <template v-if="display === 'notes'">
@@ -24,6 +25,12 @@
 </template>
 
 <script>
+import { Sampler } from 'tone';
+import C0 from '../assets/audio/C0.wav';
+import C1 from '../assets/audio/C1.wav';
+import C2 from '../assets/audio/C2.wav';
+import C3 from '../assets/audio/C3.wav';
+
 import { $bus } from '../main';
 import { getIntervalFromRoot } from '../entities/intervals';
 
@@ -47,7 +54,7 @@ export default {
     },
     highlight: {
       type: Boolean,
-      default: false
+      default: true
     },
     note: {
       type: [
@@ -94,6 +101,9 @@ export default {
     linkAccidentals: {
       type: Boolean,
       default: false
+    },
+    octave: {
+      type: Number
     }
   },
   filters: {
@@ -120,8 +130,14 @@ export default {
     }
   },
   methods: {
-    emitNote(note) {
-      $bus.$emit('mouseenter-note', { instance: this.instance, note });
+    emitNoteHover(note) {
+      $bus.$emit('mouseenter-note', { instance: this.instance, note: note });
+    },
+    emitNoteClick(note) {
+      $bus.$emit('click-note', { instance: this.instance, note: `${note}${this.octave}` });
+    },
+    playNote() {
+      this.sampler.triggerAttack(`${this.displayNote}${this.octave}`);
     }
   },
   computed: {
@@ -151,6 +167,8 @@ export default {
     },
   },
   created() {
+    this.sampler = new Sampler({ C0, C1, C2, C3 }).toMaster();
+
     $bus.$on('mouseenter-note', ({ instance, note }) => {
       if (instance !== this.instance) {
         return;
@@ -209,9 +227,40 @@ $thumb-note-height: 8px;
   user-select: none;
   cursor: pointer;
 
-  transition: transform 150ms ease-in;
+  transition: all 150ms ease-in;
 
   z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  /* Highlight on hover
+  &:after {
+    content: '';
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+
+    background-color: rgba($color-gray-lightest, 0.3);
+
+    z-index: -1;
+
+    opacity: 0;
+    transition: opacity 100ms ease-out;
+  }
+
+  &:active {
+    &:after {
+      opacity: 1;
+    }
+  } */
 
   .fretboard--left-handed & {
     right: initial;
@@ -236,14 +285,6 @@ $thumb-note-height: 8px;
   .fretboard--thumb.fretboard--left-handed.fretboard--vertical & {
     left: initial;
     right: 50%;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-
-    width: 1.5em;
-    height: 1.5em;
   }
 
   span {
@@ -426,16 +467,10 @@ $thumb-note-height: 8px;
   }
 
   &--unfocused {
-    background-color: $color-gray;
-
-    //transform: translate(50%, -50%) scale(0.85);
+    background-color: $color-gray-light;
 
     span {
-      color: $color-gray-light;
-    }
-
-    &#{$self}--neck {
-      //transform: translate(50%, -50%) scale(0.5);
+      color: $color-gray-lightest;
     }
   }
 
